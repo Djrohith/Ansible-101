@@ -1,6 +1,27 @@
 [local]
-localhost
+127.0.0.1 ansible_connection=local
+localhost ansible_connection=local 
 
-[webserver]
-#54.234.72.77 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=aws-private.pem
-52.54.116.87 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=../aws-private.pem
+
+
+[jenkins_server]
+13.58.19.241 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
+
+
+
+[sonar_server]
+3.16.139.121 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
+
+
+[nexus_server]
+3.16.139.121 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
+
+
+[app_server]
+13.59.197.213 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
+
+
