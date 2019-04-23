@@ -1,7 +1,65 @@
+---
+- name: create VPC
+  ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ vpc_cidr }}"
+    region: "{{ region }}"
+    state: present
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+  register: vpc
+
+
+- name: Set VPC ID in variable
+  set_fact:
+    vpc_id: "{{ vpc.vpc.id }}"
+
+
+- name: associate subnet to the VPC
+  ec2_vpc_subnet:
+   state: present
+   vpc_id: "{{ vpc_id }}"
+   region: "{{ region }}"
+   cidr: "{{ subnet_cidr }}"
+   aws_access_key: "{{ aws_access_key }}"
+   aws_secret_key: "{{ aws_secret_key }}"
+   map_public: yes
+   resource_tags:
+     Name: "{{ subnet_name }}"
+  register: subnet
+
+- name: create IGW
+  ec2_vpc_igw:
+   vpc_id: "{{ vpc_id }}"
+   region: "{{ region }}"
+   aws_access_key: "{{ aws_access_key }}"
+   aws_secret_key: "{{ aws_secret_key }}"
+   state: "present"
+   tags:
+     Name: "{{ igw_name }}"
+  register: igw
+
+
+- name: Route IGW
+  ec2_vpc_route_table:
+   vpc_id: "{{ vpc_id }}"
+   region: "{{ region }}"
+   aws_access_key: "{{ aws_access_key }}"
+   aws_secret_key: "{{ aws_secret_key }}"
+   subnets:
+     - "{{ subnet.subnet.id }}"
+   routes:
+     - dest: 0.0.0.0/0
+       gateway_id: "{{ igw.gateway_id  }}"
+   tags:
+     Name: "{{ route_name }}"
+
+
 - name: Create security group
   ec2_group:
     name: "{{ project_name }}_security_group"
     description: "{{ project_name }} security group"
+    vpc_id: "{{ vpc_id }}"
     region: "{{ region }}"
     rules:
       - proto: tcp  # ssh
@@ -19,7 +77,7 @@
     rules_egress:
       - proto: all
         cidr_ip: 0.0.0.0/0
-  register: test_firewall
+  register: security_group
 
 - name: Create an EC2 key
   ec2_key:
@@ -35,7 +93,7 @@
   ec2:
     key_name: "{{ project_name }}-{{ env }}-key"
     region: "{{ region }}"
-    group_id: "{{ test_firewall.group_id }}"
+    group_id: "{{ security_group.group_id }}"
     instance_type: "{{ instance_type }}"
     image: "{{ ami }}"
     wait: yes
@@ -43,7 +101,7 @@
         env: "{{ env }}"
     count_tag: env
     exact_count: 1
-    vpc_subnet_id: subnet-68a89f00
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
     assign_public_ip: yes
   register: ec2
 - debug: var=item
@@ -65,7 +123,7 @@
   ec2:
     key_name: "{{ project_name }}-{{ env }}-key"
     region: "{{ region }}"
-    group_id: "{{ test_firewall.group_id }}"
+    group_id: "{{ security_group.group_id }}"
     instance_type: "{{ instance_type }}"
     image: "{{ ami }}"
     wait: yes
@@ -73,7 +131,7 @@
         dev: "{{ dev }}"
     count_tag: dev
     exact_count: 1
-    vpc_subnet_id: subnet-68a89f00
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
     assign_public_ip: yes
   register: ec2
 
@@ -105,7 +163,7 @@
   ec2:
     key_name: "{{ project_name }}-{{ env }}-key"
     region: "{{ region }}"
-    group_id: "{{ test_firewall.group_id }}"
+    group_id: "{{ security_group.group_id }}"
     instance_type: "{{ instance_type }}"
     image: "{{ ami }}"
     wait: yes
@@ -113,7 +171,7 @@
         qa: "{{ qa }}"
     count_tag: qa
     exact_count: 1
-    vpc_subnet_id: subnet-68a89f00
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
     assign_public_ip: yes
   register: ec2
 
