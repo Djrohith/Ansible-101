@@ -4,12 +4,12 @@ aws_secret_key: ""
 region: "us-east-2"
 
 # VPC
-vpc_cidr: 10.10.0.0/24
+vpc_cidr: 10.0.0.0/16
 vpc_name: "Ansible VPC3"
 
 # Subnet
 subnet_name: "Ansible Subnet"
-subnet_cidr: 10.10.0.0/26
+subnet_cidr: 10.0.1.0/24
 
 igw_name: "Traffic IGW"
 
@@ -22,12 +22,14 @@ region: us-east-2
 instance_type: t2.medium
 # ami: ami-f4cc1de2  # Ubuntu 16.04 LTS
 ami: ami-0f2b4fc905b0bd1f1  # Centos 7
-project_name: ansibletest
-#tag_Name: jenkins server
-#tag_type: jenkins server
-env: env
-dev: dev
-qa: qa
+project_name: ansible
+demo: aws
+ec2_tag_Name1: "jenkins server"
+ec2_tag_Type1: "jenkins server"
+ec2_tag_Name2: "sonar & nexus server"
+ec2_tag_Type2: "sonar & nexus server"
+ec2_tag_Name3: "application server"
+ec2_tag_Type3: "application server"
 app_code_user: "centos" # remote user
 hoststring: "ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem"
 hostpath: "../hosts"

@@ -5,29 +5,26 @@ localhost ansible_connection=local
 
 
 [jenkins_server]
-18.223.252.6 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-3.16.180.199 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-18.224.57.125 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+18.188.44.255 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
 
 
 
 [sonar_server]
-18.217.170.125 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-18.222.108.145 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-52.15.143.54 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+3.16.123.112 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
 
 
 
 
 
 [nexus_server]
-52.15.143.54 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+3.16.123.112 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
 
 
 
 [app_server]
-13.58.219.119 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-52.15.213.250 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
-13.58.193.57 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+3.16.1.30 ansible_ssh_user=centos ansible_ssh_private_key_file=/root/Ansible-Automation/aws-private.pem
+
 
 
