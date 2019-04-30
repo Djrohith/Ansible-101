@@ -67,12 +67,16 @@
         to_port: 22
         cidr_ip: 0.0.0.0/0
       - proto: tcp  # http
-        from_port: 80
-        to_port: 80
+        from_port: 8080
+        to_port: 8080
         cidr_ip: 0.0.0.0/0
       - proto: tcp  # https
-        from_port: 443
-        to_port: 443
+        from_port: 9000
+        to_port: 9000
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp  # https
+        from_port: 8081
+        to_port: 8081
         cidr_ip: 0.0.0.0/0
     rules_egress:
       - proto: all
