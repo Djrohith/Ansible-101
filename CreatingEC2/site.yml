@@ -5,4 +5,5 @@
   remote_user: centos
   roles:
     - create
-   
+
+#- include: /root/Ansible-Automation/vagrant-alm/ansible/alm.yml   

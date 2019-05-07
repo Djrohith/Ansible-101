@@ -230,3 +230,5 @@
 #  tasks:
 #   - name: ping
 #     action: ping
+
+#- include: ansible-playbook -i /root/Ansible-Automation/hosts /root/Ansible-Automation/vagrant-alm/ansible/alm.yml --extra-vars ansible_ssh_user=centos
