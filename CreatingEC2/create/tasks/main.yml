@@ -146,7 +146,7 @@
 
 
 
-- name: Create an EC2 instance sonar&nexus
+- name: Create an EC2 instance sonar server
   ec2:
     key_name: "{{ project_name }}-{{ demo }}-key"
     region: "{{ region }}"
@@ -163,7 +163,7 @@
   register: ec2
 
 
-- name: Add the newly created EC2 instance(s) to host group sonar&nexus
+- name: Add the newly created EC2 instance(s) to host group sonar
   lineinfile: dest={{ hostpath }}
               regexp={{ item.public_ip }}
               insertafter='\[sonar_server\]'
@@ -173,6 +173,24 @@
 
 
 - wait_for: path={{ hostpath }} search_regex={{hoststring}}
+
+
+
+#- name: Create an EC2 instance nexus server
+#  ec2:
+#    key_name: "{{ project_name }}-{{ demo }}-key"
+#    region: "{{ region }}"
+#    group_id: "{{ security_group.group_id }}"
+#    instance_type: "{{ instance_type }}"
+#    image: "{{ ami }}"
+#    wait: yes
+#    instance_tags: '{"Name":"{{ec2_tag_Name2}}","Type":"{{ec2_tag_Type2}}"}'
+#    count_tag: '{"Name":"{{ec2_tag_Name2}}","Type":"{{ec2_tag_Type2}}"}'
+#    exact_count: 1
+#    vpc_subnet_id: "{{ subnet.subnet.id }}"
+#    assign_public_ip: yes
+#    private_ip: 10.0.1.20
+#  register: ec2
 
 
 - name: Add the newly created EC2 instance(s) to host group nexus_server
