@@ -1,0 +1,5 @@
+---
+# tasks file for lab-application
+
+- name: once the ec2 instance is launched inlcude application server
+  include: application.yml ec2_Name={{ instance_name4 }} ec2_Tag={{ instance_tag4 }}

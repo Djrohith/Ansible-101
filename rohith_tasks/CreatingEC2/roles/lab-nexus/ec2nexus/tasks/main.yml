@@ -1,0 +1,3 @@
+---
+- name: once the ec2 instance is launched include nexus server
+  include: nexusserver.yml ec2_Name={{ instance_name3 }} ec2_Tag={{ instance_tag3 }}

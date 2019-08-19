@@ -1,0 +1,4 @@
+---
+- name: once the ec2 instance is launched include sonar server
+  include: sonarserver.yml ec2_Name={{ instance_name2 }} ec2_Tag={{ instance_tag2 }}
+
